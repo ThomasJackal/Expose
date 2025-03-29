@@ -49,6 +49,8 @@ public class Artist extends User {
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private List<Image> images;
 
+    public Artist() {
+    }
 
     public Artist(User user, String displayed_name, String description, String contact, String location, String profession, AccountType accountType) {
         super(user.getUsername(), user.getPassword(), user.getRoles(), user.getEmail(), user.getFirstname(), user.getLastname());
@@ -65,4 +67,127 @@ public class Artist extends User {
 
         this.id = user.getId();
     }
+
+    @Override
+    public String toString() {
+        return "Artist{" +
+                "displayed_name='" + displayed_name + '\'' +
+                ", description='" + description + '\'' +
+                ", contact='" + contact + '\'' +
+                ", location='" + location + '\'' +
+                ", profession='" + profession + '\'' +
+                ", upgrade_date=" + upgrade_date +
+                ", accountType=" + accountType +
+                ", id='" + getId() + '\'' +
+                ", username='" + getUsername() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", creation_date=" + getCreation_date() +
+                ", cloturation_date=" + getCloturation_date() +
+                ", firstname='" + getFirstname() + '\'' +
+                ", lastname='" + getLastname() + '\'' +
+                ", payementInfo=" + getPayementInfo() +
+                " (Potential lazy informations not displayed)" +
+                '}';
+
+    }
+
+    //region Getters/Setters
+
+    public String getDisplayed_name() {
+        return displayed_name;
+    }
+
+    public void setDisplayed_name(String displayed_name) {
+        this.displayed_name = displayed_name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public LocalDate getUpgrade_date() {
+        return upgrade_date;
+    }
+
+    public void setUpgrade_date(LocalDate upgrade_date) {
+        this.upgrade_date = upgrade_date;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public List<Patronage> getPatrons() {
+        return patrons;
+    }
+
+    public void setPatrons(List<Patronage> patrons) {
+        this.patrons = patrons;
+    }
+
+    public List<ArtistParticipation> getParticipations() {
+        return participations;
+    }
+
+    public void setParticipations(List<ArtistParticipation> participations) {
+        this.participations = participations;
+    }
+
+    public List<Gallery> getGalleries() {
+        return galleries;
+    }
+
+    public void setGalleries(List<Gallery> galleries) {
+        this.galleries = galleries;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    //endregion
 }

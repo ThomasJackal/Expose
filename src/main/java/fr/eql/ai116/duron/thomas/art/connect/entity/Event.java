@@ -99,6 +99,18 @@ public class Event {
         this.creation_date = LocalDate.now();
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", creation_date=" + creation_date +
+                ", cloturation_date=" + cloturation_date +
+                ", archivation_date=" + archivation_date +
+                ", eventType=" + eventType +
+                '}';
+    }
+
     //region Getters/Setters
     public long getId() {
         return id;

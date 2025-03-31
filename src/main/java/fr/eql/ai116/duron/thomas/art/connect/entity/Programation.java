@@ -44,6 +44,14 @@ public class Programation {
         }
     }
 
+    public LocalDate calculateEndDate() {
+        int end = 0;
+        for (Slot slot : slots) {
+            if (slot.getDays_from_start() > end) end = slot.getDays_from_start();
+        }
+        return start_date.plusDays(end);
+    }
+
     //region Getters/Setters
 
     public long getId() {

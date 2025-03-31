@@ -1,5 +1,6 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Ticket {
     @ManyToOne
     private TicketType ticketType;
 
+    @JsonIgnore
     @ManyToOne
     private User owner;
 }

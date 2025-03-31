@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class IdentifierServiceImpl implements IdentifierService {
@@ -18,7 +17,6 @@ public class IdentifierServiceImpl implements IdentifierService {
     @Override
     public SecuredUser getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication instanceof AnonymousAuthenticationToken) return null;
         else return securedUserRepository.findByUsername(authentication.getName());
     }

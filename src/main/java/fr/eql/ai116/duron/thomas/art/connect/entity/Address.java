@@ -14,7 +14,41 @@ public class Address {
     private long latitude;
     private long longitude;
 
-    public AddressDatas getAddressInfo() {
+    public Address() {
+    }
+
+    public Address(long latitude, long longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public AddressDatas calculateAddressInfo() {
         return new AddressDatas(latitude,longitude);
     }
+
+    //region Getters/Setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
+
+    public long getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
+    }
+    //endregion
 }

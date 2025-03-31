@@ -1,8 +1,8 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.Role;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.SecuredUser;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -21,18 +21,23 @@ public class User extends SecuredUser {
     private String firstname;
     private String lastname;
 
+    @JsonIgnore
     @OneToOne
     private PayementInfo payementInfo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "patron")
     private List<Patronage> patronnages = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Ticket> tickets = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "followers")
     private List<Artist> followedArtists = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "followers")
     private List<Event> followedEvents = new ArrayList<>();
 

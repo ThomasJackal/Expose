@@ -1,5 +1,6 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +19,11 @@ public class Patronage {
     private LocalDateTime start;
     private LocalDateTime end;
 
+    @JsonIgnore
     @ManyToOne
     private User patron;
+
+    @JsonIgnore
     @ManyToOne
     private Artist artist;
 }

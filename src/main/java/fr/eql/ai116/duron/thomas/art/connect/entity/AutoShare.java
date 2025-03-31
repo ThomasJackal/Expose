@@ -1,5 +1,6 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class AutoShare {
     private String message;
     private LocalDateTime schreduled_posting_datetime;
 
+    @JsonIgnore
     @ManyToOne
     private Event event;
 

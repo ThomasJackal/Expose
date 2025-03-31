@@ -29,7 +29,7 @@ public class SpringSecurityConfig {
             request.requestMatchers("/api/rest/free").permitAll();
             request.requestMatchers("/api/rest/authenticated").authenticated();
             request.requestMatchers("/api/rest/o/**").access(new OwnershipAuthorizationManager());
-            request.requestMatchers("/api/rest/a/**").hasRole("ARTIST");
+            request.requestMatchers("/api/rest/a/**").hasAuthority("ARTIST");
             request.anyRequest().permitAll();
         });
 

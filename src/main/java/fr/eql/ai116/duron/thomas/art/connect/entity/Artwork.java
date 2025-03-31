@@ -1,5 +1,6 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,6 +30,7 @@ public class Artwork {
     private LocalDate creation_date;
     private LocalDate artwork_date;
 
+    @JsonIgnore
     @ManyToOne
     private Gallery gallery;
 

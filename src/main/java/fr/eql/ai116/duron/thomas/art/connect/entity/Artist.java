@@ -1,10 +1,12 @@
 package fr.eql.ai116.duron.thomas.art.connect.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.Role;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.RoleName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -26,15 +28,19 @@ public class Artist extends User {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "artist")
     private List<Patronage> patrons;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "artist")
     private List<ArtistParticipation> participations;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Gallery> galleries;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_followed_artists",
@@ -42,7 +48,8 @@ public class Artist extends User {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> followers;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "artist_page_images",
             joinColumns = @JoinColumn(name = "artist_id"),

@@ -1,10 +1,7 @@
 package fr.eql.ai116.duron.thomas.art.connect.repository;
 
 import fr.eql.ai116.duron.thomas.art.connect.entity.Event;
-import fr.eql.ai116.duron.thomas.art.connect.entity.dto.SearchInputDto;
-import fr.eql.ai116.duron.thomas.art.connect.entity.dto.SearchOutputDto;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -26,4 +23,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                    "ORDER BY distance_km"
     )
     List<Object[]> search(long latitude, long longitude);
+
+    /// Cette méthode casse l'ordre des ids, il faudrait que l'ordre soit conservé
+    @Query("SELECT e FROM Event e WHERE e.id IN :ids")
+    List<Event> findByIds(List<Long> ids);
 }

@@ -17,6 +17,10 @@ public class PayementInfo {
 
     private LocalDate creation_date;
 
+    private long cardNumbers;
+    private String cardExpirationDate;
+    private int CVV;
+
     @JsonIgnore
     @OneToOne
     private User user;

@@ -60,7 +60,7 @@ public class Artist extends User {
     }
 
     public Artist(User user, String displayed_name, String description, String contact, String location, String profession, AccountType accountType) {
-        super(user.getUsername(), user.getPassword(), user.getRoles(), user.getEmail(), user.getFirstname(), user.getLastname());
+        super(user.getUsername(), user.getPassword(), user.getRoles(), user.getEmail(), user.getProfilePicture()==null?"":user.getProfilePicture().getImageLink());
         this.displayed_name = displayed_name;
         this.description = description;
         this.contact = contact;
@@ -90,8 +90,6 @@ public class Artist extends User {
                 ", email='" + getEmail() + '\'' +
                 ", creation_date=" + getCreation_date() +
                 ", cloturation_date=" + getCloturation_date() +
-                ", firstname='" + getFirstname() + '\'' +
-                ", lastname='" + getLastname() + '\'' +
                 ", payementInfo=" + getPayementInfo() +
                 " (Potential lazy informations not displayed)" +
                 '}';

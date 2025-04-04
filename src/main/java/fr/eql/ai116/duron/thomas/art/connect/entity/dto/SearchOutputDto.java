@@ -7,5 +7,5 @@ import fr.eql.ai116.duron.thomas.art.connect.entity.EventType;
 import java.time.LocalDate;
 import java.util.List;
 
-public record SearchOutputDto(long latitude, long longitude, String name, String description, LocalDate start, LocalDate end, List<ArtistParticipation> featuredArtists, float distance, EventType eventType, List<ArtTag> tags) {
+public record SearchOutputDto(long id, long latitude, long longitude, String name, String description, LocalDate start, LocalDate end, List<ArtistParticipation> featuredArtists, float distance, EventType eventType, List<ArtTag> tags, String image) {
 }

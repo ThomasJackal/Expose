@@ -3,12 +3,14 @@ package fr.eql.ai116.duron.thomas.art.connect.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.Role;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.SecuredUser;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,38 +20,43 @@ public class User extends SecuredUser {
     private String email;
     private LocalDate creation_date;
     private LocalDate cloturation_date;
-    private String firstname;
-    private String lastname;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image profilePicture;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
     private PayementInfo payementInfo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "patron")
+    @OneToMany(mappedBy = "patron", cascade = CascadeType.ALL)
     private List<Patronage> patronnages = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", cascade = CascadeType.ALL)
     private List<Artist> followedArtists = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "followers")
+    @ManyToMany(mappedBy = "followers", cascade = CascadeType.ALL)
     private List<Event> followedEvents = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String username, String password, List<Role> roles, String email, String firstname, String lastname) {
+    public User(String username, String password, List<Role> roles, String email, String profilePictureLink) {
         super(username,password,roles);
         this.email = email;
         this.creation_date = LocalDate.now();
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.profilePicture = new Image(
+                profilePictureLink,
+                LocalDateTime.now(),
+                this
+        );
     }
 
     @Override
@@ -60,14 +67,24 @@ public class User extends SecuredUser {
                 ", email='" + email + '\'' +
                 ", creation_date=" + creation_date +
                 ", cloturation_date=" + cloturation_date +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
                 ", payementInfo=" + payementInfo +
                 " (Potential lazy informations not displayed)" +
                 '}';
     }
 
     //region Getters/Setters
+
+    public void setCreation_date(LocalDate creation_date) {
+        this.creation_date = creation_date;
+    }
+
+    public Image getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Image profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     public String getEmail() {
         return email;
@@ -87,22 +104,6 @@ public class User extends SecuredUser {
 
     public void setCloturation_date(LocalDate cloturation_date) {
         this.cloturation_date = cloturation_date;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
     }
 
     public PayementInfo getPayementInfo() {

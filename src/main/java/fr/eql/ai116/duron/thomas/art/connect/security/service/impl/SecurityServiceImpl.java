@@ -1,7 +1,7 @@
 package fr.eql.ai116.duron.thomas.art.connect.security.service.impl;
 
+import fr.eql.ai116.duron.thomas.art.connect.entity.exceptions.UsernameAlreadyExistException;
 import fr.eql.ai116.duron.thomas.art.connect.security.JwtUtilities;
-import fr.eql.ai116.duron.thomas.art.connect.security.SpringSecurityConfig;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.BearerToken;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.Role;
 import fr.eql.ai116.duron.thomas.art.connect.security.entity.SecuredUser;
@@ -32,20 +32,20 @@ public class SecurityServiceImpl implements SecurityService {
     private JwtUtilities jwtUtilities;
 
     @Override
-    public ResponseEntity<Object> register(RegistrationDto registrationDto) {
+    public BearerToken register(RegistrationDto registrationDto) throws UsernameAlreadyExistException {
         if (securedUserRepository.existsByUsername(registrationDto.getUsername())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Identifiant déjà utilisé");
+            throw new UsernameAlreadyExistException("Username already exist");
         } else {
             Role role = roleRepository.findByRoleName(registrationDto.getRoleName());
             String token = jwtUtilities.generateToken(registrationDto.getUsername(), Collections.singletonList(role.getRoleName().toString()));
 
-            SecuredUser user = SpringSecurityConfig.getNewSecuredUser();
+            SecuredUser user = registrationDto.instanciateNewUser();
             user.setUsername(registrationDto.getUsername());
             user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
             user.setRoles(Collections.singletonList(role));
             securedUserRepository.save(user);
 
-            return ResponseEntity.status(HttpStatus.OK).body(new BearerToken(token , "Bearer "));
+            return new BearerToken(token , "Bearer ");
         }
     }
 

@@ -18,10 +18,12 @@ public class SecurityRestController {
 
     private SecurityService securityService;
 
+    /* Le register ne peut pas être factorisé, il neccessite des données uniques à chaques projets
     @PostMapping("/register")
     public ResponseEntity<Object> registerUser(@RequestBody RegistrationDto registrationDto) {
         return securityService.register(registrationDto);
     }
+     */
 
     @PostMapping("/authenticate")
     public ResponseEntity<Object> authenticate(@RequestBody AuthenticationDto authenticationDto) {

@@ -22,10 +22,6 @@ public class Address {
         this.longitude = longitude;
     }
 
-    public AddressDatas calculateAddressInfo() {
-        return new AddressDatas(latitude,longitude);
-    }
-
     //region Getters/Setters
     public long getId() {
         return id;

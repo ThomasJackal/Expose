@@ -77,7 +77,7 @@ public abstract class SecuredUser implements UserDetails {
     //endregion
 
     //region Other Getters/Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

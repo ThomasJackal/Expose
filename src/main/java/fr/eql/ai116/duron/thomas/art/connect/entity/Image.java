@@ -21,4 +21,49 @@ public class Image {
     @JsonIgnore
     @ManyToOne
     private User uploader;
+
+    public Image() {
+    }
+
+    public Image(String imageLink, LocalDateTime uploadDate, User uploader) {
+        this.imageLink = imageLink;
+        this.uploadDate = uploadDate;
+        this.uploader = uploader;
+    }
+
+    //region Getters/Setters
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
+
+    public LocalDateTime getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(LocalDateTime uploadDate) {
+        this.uploadDate = uploadDate;
+    }
+
+    public User getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(User uploader) {
+        this.uploader = uploader;
+    }
+
+    //endregion
 }

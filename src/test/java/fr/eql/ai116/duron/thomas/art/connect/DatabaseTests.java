@@ -42,8 +42,7 @@ public class DatabaseTests {
                 "allo",
                 null,
                 "t.d@g.c",
-                "Thomas",
-                "Duron"
+                ""
         );
 
         User fetchedUser = userRepo.save(user);
@@ -103,7 +102,6 @@ public class DatabaseTests {
         eventRepository.save(event);
 
         List<SearchOutputDto> results = eventService.searchEvent(new SearchInputDto(1,1,"",200,null,null));
-
         System.out.println(results);
     }
 }

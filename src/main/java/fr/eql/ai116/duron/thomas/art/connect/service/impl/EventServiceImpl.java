@@ -58,6 +58,7 @@ public class EventServiceImpl implements EventService {
         return eventRepository.save(event);
     }
 
+    @Transactional
     @Override
     public List<SearchOutputDto> searchEvent(SearchInputDto input) {
 
@@ -73,6 +74,10 @@ public class EventServiceImpl implements EventService {
 
             Event event = result.get();
 
+            //Force hibernate à loader
+            event.getImages().size();
+            event.getTags().size();
+
             output.add(new SearchOutputDto(
                     event.getId(),
                     event.getAddress().getLatitude(),
@@ -81,10 +86,20 @@ public class EventServiceImpl implements EventService {
                     event.getDescription(),
                     event.getProgramation().getStart_date(),
                     event.getProgramation().calculateEndDate(),
-                    null, //TODO
+                    event.getArtistParticipations().stream().map(participation ->
+                            new ArtistParticipationDto(
+                                    participation.getArtist_displayed_name(),
+                                    participation.getArtist_role(),
+                                    new FollowerDto(
+                                            participation.getArtist().getId(),
+                                            participation.getArtist().getUsername(),
+                                            participation.getArtist().getProfilePicture().getImageLink()
+                                            )
+                                    )
+                    ).toList(),
                     ((Double) eventsId.get(i)[1]).floatValue(),
                     event.getEventType(),
-                    null, //TODO
+                    event.getTags(),
                     event.getImages().get(0).getImageLink()
             ));
         }

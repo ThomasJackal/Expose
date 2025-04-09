@@ -22,7 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                    "JOIN address a ON a.id = ea.address_id " +
                    "ORDER BY distance_km"
     )
-    List<Object[]> search(long latitude, long longitude);
+    List<Object[]> search(double latitude, double longitude);
 
     /// Cette méthode casse l'ordre des ids, il faudrait que l'ordre soit conservé
     @Query("SELECT e FROM Event e WHERE e.id IN :ids")

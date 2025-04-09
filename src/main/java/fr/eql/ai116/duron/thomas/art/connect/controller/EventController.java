@@ -32,6 +32,9 @@ public class EventController {
 
     @PostMapping("search")
     public ResponseEntity<List<SearchOutputDto>> searchEvent(@RequestBody SearchInputDto dto) {
+        System.out.println(dto.latitude());
+        System.out.println(dto.longitude());
+
         return ResponseEntity.status(HttpStatus.OK).body(eventService.searchEvent(dto));
     }
 }

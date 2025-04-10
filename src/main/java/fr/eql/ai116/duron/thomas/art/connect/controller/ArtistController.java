@@ -31,6 +31,8 @@ public class ArtistController {
     @PostMapping("event/create")
     public ResponseEntity<Event> createEvent(@RequestBody EventCreationDto dto) {
         Artist requester = (Artist) identifierService.getUser();
+        System.out.println("DEBUT");
+        System.out.println(dto);
         return ResponseEntity.status(HttpStatus.OK).body(eventService.createEvent(requester, dto));
     }
 }

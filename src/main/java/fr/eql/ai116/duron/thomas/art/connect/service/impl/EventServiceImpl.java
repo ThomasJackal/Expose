@@ -6,6 +6,8 @@ import fr.eql.ai116.duron.thomas.art.connect.entity.ArtistParticipation;
 import fr.eql.ai116.duron.thomas.art.connect.entity.Event;
 import fr.eql.ai116.duron.thomas.art.connect.entity.EventType;
 import fr.eql.ai116.duron.thomas.art.connect.entity.Image;
+import fr.eql.ai116.duron.thomas.art.connect.entity.Programation;
+import fr.eql.ai116.duron.thomas.art.connect.entity.Ticketing;
 import fr.eql.ai116.duron.thomas.art.connect.entity.dto.AddressDto;
 import fr.eql.ai116.duron.thomas.art.connect.entity.dto.ArtistParticipationDto;
 import fr.eql.ai116.duron.thomas.art.connect.entity.dto.EventCreationDto;
@@ -24,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event createEvent(Artist creator, EventCreationDto dto) {
+        System.out.println(dto.address());
         Event event = new Event(
                 dto.name(),
                 dto.description(),
@@ -48,14 +50,27 @@ public class EventServiceImpl implements EventService {
                 dto.address(),
                 Arrays.asList(dto.tags()),
                 Arrays.stream(dto.images()).map(image ->
-                        new Image(image.getImageLink(), LocalDateTime.now(),creator)).toList()
+                        new Image(image.getImageLink(), LocalDateTime.now(), creator)).toList()
         );
         event.getArtistParticipations().add(new ArtistParticipation(dto.owner_artist_role(), event, creator));
-        dto.programation().setEvent(event);
-        dto.ticketing().setEvent(event);
-        dto.programation().updateSlots();
-        dto.ticketing().updateTicketTypes();
+        setupProgramation(dto.programation(), event);
+        setupTicketing(dto.ticketing(), event);
+
         return eventRepository.save(event);
+    }
+
+    private void setupProgramation(Programation programation, Event event) {
+        if (programation == null) return;
+
+        programation.setEvent(event);
+        programation.updateSlots();
+    }
+
+    private void setupTicketing(Ticketing ticketing, Event event) {
+        if (ticketing == null) return;
+
+        ticketing.setEvent(event);
+        ticketing.updateTicketTypes();
     }
 
     @Transactional
@@ -94,8 +109,8 @@ public class EventServiceImpl implements EventService {
                                             participation.getArtist().getId(),
                                             participation.getArtist().getUsername(),
                                             participation.getArtist().getProfilePicture().getImageLink()
-                                            )
                                     )
+                            )
                     ).toList(),
                     ((Double) eventsId.get(i)[1]).floatValue(),
                     event.getEventType(),
@@ -120,7 +135,7 @@ public class EventServiceImpl implements EventService {
                 event.getName(),
                 event.getDescription(),
                 event.getEventType(),
-                new ProgramationDto(
+                event.getProgramation() == null ? null : new ProgramationDto(
                         event.getProgramation().getStart_date(),
                         event.getProgramation().getSlots().stream().map(slot ->
                                 new SlotDto(
@@ -128,17 +143,16 @@ public class EventServiceImpl implements EventService {
                                         slot.getStart_time(),
                                         slot.getEnd_time()
                                 )).toList()
-                ),
-                new TicketingDto(
-                        event.getTicketing().getClosing_datetime(),
-                        event.getTicketing().getTicketTypes().stream().map(ticketTypes ->
-                                new TicketTypeDto(
-                                        ticketTypes.getName(),
-                                        ticketTypes.getDescription(),
-                                        ticketTypes.getMax_places(),
-                                        ticketTypes.getPrice_per_unit()
-                                )).toList()
-                ),
+                ), event.getTicketing() == null ? null : new TicketingDto(
+                event.getTicketing().getClosing_datetime(),
+                event.getTicketing().getTicketTypes().stream().map(ticketTypes ->
+                        new TicketTypeDto(
+                                ticketTypes.getName(),
+                                ticketTypes.getDescription(),
+                                ticketTypes.getMax_places(),
+                                ticketTypes.getPrice_per_unit()
+                        )).toList()
+        ),
                 event.getArtistParticipations().stream().map(artistParticipation ->
                         new ArtistParticipationDto(
                                 artistParticipation.getArtist_displayed_name(),

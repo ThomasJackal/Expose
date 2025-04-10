@@ -9,8 +9,8 @@ import java.util.List;
 
 public record SearchOutputDto(
         long id,
-        long latitude,
-        long longitude,
+        double latitude,
+        double longitude,
         String name,
         String description,
         LocalDate start,

@@ -6,7 +6,10 @@ import fr.eql.ai116.duron.thomas.art.connect.security.service.IdentifierService;
 import fr.eql.ai116.duron.thomas.art.connect.service.OwnedService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,7 @@ public class OwnedController {
     private IdentifierService identifierService;
 
     @PostMapping("{username}/upgrade")
-    public String upgradeToArtist(@PathParam("username") String username, @RequestBody UpgradeDto dto) {
+    public String upgradeToArtist(@PathVariable("username") String username, @RequestBody UpgradeDto dto) {
         ownedService.upgrade((User) identifierService.getUser(), dto);
         return "oui";
     }

@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @NativeQuery("UPDATE `art_connect_db`.`users` SET `user_type`='Artist' WHERE `id` = :userId;")
     void upgrade(@Param("userId") Long userId);
+
+    User findByUsername(String username);
 }

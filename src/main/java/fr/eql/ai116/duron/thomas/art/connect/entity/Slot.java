@@ -16,6 +16,7 @@ public class Slot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String label;
     private int days_from_start;
     private LocalTime start_time;
     private LocalTime end_time;
@@ -34,6 +35,14 @@ public class Slot {
     }
 
     //region Getters/Setters
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public long getId() {
         return id;

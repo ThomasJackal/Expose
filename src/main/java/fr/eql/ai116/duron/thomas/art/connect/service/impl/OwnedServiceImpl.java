@@ -27,8 +27,5 @@ public class OwnedServiceImpl implements OwnedService {
                 dto.accountType()
         );
         userRepository.save(artist);
-        System.out.println("******************");
-        System.out.println(user);
-        System.out.println(artist);
     }
 }

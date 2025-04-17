@@ -22,6 +22,8 @@ import fr.eql.ai116.duron.thomas.art.connect.entity.dto.TicketTypeDto;
 import fr.eql.ai116.duron.thomas.art.connect.entity.dto.TicketingDto;
 import fr.eql.ai116.duron.thomas.art.connect.repository.EventRepository;
 import fr.eql.ai116.duron.thomas.art.connect.service.EventService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +37,14 @@ import java.util.Optional;
 @Service
 public class EventServiceImpl implements EventService {
 
+    private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     private EventRepository eventRepository;
 
     @Override
     public Event createEvent(Artist creator, EventCreationDto dto) {
-        System.out.println(dto.address());
+
         Event event = new Event(
                 dto.name(),
                 dto.description(),
@@ -56,7 +60,9 @@ public class EventServiceImpl implements EventService {
         setupProgramation(dto.programation(), event);
         setupTicketing(dto.ticketing(), event);
 
-        return eventRepository.save(event);
+        Event savedEvent = eventRepository.save(event);;
+        logger.info("event saved: {}", savedEvent.toString());
+        return savedEvent;
     }
 
     private void setupProgramation(Programation programation, Event event) {
@@ -139,6 +145,7 @@ public class EventServiceImpl implements EventService {
                         event.getProgramation().getStart_date(),
                         event.getProgramation().getSlots().stream().map(slot ->
                                 new SlotDto(
+                                        slot.getLabel(),
                                         slot.getDays_from_start(),
                                         slot.getStart_time(),
                                         slot.getEnd_time()

@@ -15,9 +15,6 @@ import java.util.regex.Pattern;
 
 public class OwnershipAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
 
-    @Autowired
-    IdentifierService identifierService;
-
     @Override
     public AuthorizationDecision check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
 

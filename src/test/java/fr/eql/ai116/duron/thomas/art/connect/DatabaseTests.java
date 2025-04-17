@@ -101,7 +101,8 @@ public class DatabaseTests {
         );
         eventRepository.save(event);
 
-        List<SearchOutputDto> results = eventService.searchEvent(new SearchInputDto(1,1,"",200,null,null));
-        System.out.println(results);
+        //System.out.println("hello");
+        //List<SearchOutputDto> results = eventService.searchEvent(new SearchInputDto(1,1,"",200,null,null));
+        //System.out.println(results);
     }
 }

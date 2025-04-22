@@ -121,7 +121,7 @@ public class EventServiceImpl implements EventService {
                     ((Double) eventsId.get(i)[1]).floatValue(),
                     event.getEventType(),
                     event.getTags(),
-                    event.getImages().get(0).getImageLink()
+                    event.getImages().isEmpty() ? "https://emptyeasel.com/wp-content/uploads/2020/10/garage-loft-art-studio.jpg": event.getImages().get(0).getImageLink()
             ));
         }
 

@@ -7,7 +7,7 @@ public record SearchInputDto(
         float latitude,
         float longitude,
         String field,
-        int perimeter,
+        float radius,
         EventType eventType,
         ArtTag[] tags) {
 }

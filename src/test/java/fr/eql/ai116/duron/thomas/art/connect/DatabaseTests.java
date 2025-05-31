@@ -1,15 +1,10 @@
 package fr.eql.ai116.duron.thomas.art.connect;
 
 import fr.eql.ai116.duron.thomas.art.connect.entity.Address;
-import fr.eql.ai116.duron.thomas.art.connect.entity.ArtTag;
 import fr.eql.ai116.duron.thomas.art.connect.entity.Event;
 import fr.eql.ai116.duron.thomas.art.connect.entity.EventType;
-import fr.eql.ai116.duron.thomas.art.connect.entity.Image;
 import fr.eql.ai116.duron.thomas.art.connect.entity.Programation;
-import fr.eql.ai116.duron.thomas.art.connect.entity.Ticketing;
 import fr.eql.ai116.duron.thomas.art.connect.entity.User;
-import fr.eql.ai116.duron.thomas.art.connect.entity.dto.SearchInputDto;
-import fr.eql.ai116.duron.thomas.art.connect.entity.dto.SearchOutputDto;
 import fr.eql.ai116.duron.thomas.art.connect.repository.EventRepository;
 import fr.eql.ai116.duron.thomas.art.connect.repository.UserRepository;
 import fr.eql.ai116.duron.thomas.art.connect.service.EventService;

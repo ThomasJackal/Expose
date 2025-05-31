@@ -84,8 +84,8 @@ public class EventServiceImpl implements EventService {
     public List<SearchOutputDto> searchEvent(SearchInputDto input) {
 
         List<SearchOutputDto> output = new ArrayList<>();
-
-        List<Object[]> eventsId = eventRepository.search(input.latitude(), input.longitude());
+        
+        List<Object[]> eventsId = eventRepository.search(input.latitude(), input.longitude(), input.radius());
         List<Long> ids = eventsId.stream().map(x -> (long) x[0]).toList();
         //List<Event> fetchedEvents = eventRepository.findByIds(ids); //TODO: trouver un moyen d'utiliser ça sans changer l'ordre de la list
 
